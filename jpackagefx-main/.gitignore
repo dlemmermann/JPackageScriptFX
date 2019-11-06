@@ -1,0 +1,5 @@
+.idea
+/target/
+*.iml
+/logs/
+RUNNING_PID
