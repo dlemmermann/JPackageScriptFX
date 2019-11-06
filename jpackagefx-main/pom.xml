@@ -20,13 +20,13 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.dlsc</groupId>
+            <groupId>com.dlsc.jpackagefx</groupId>
             <artifactId>module1</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
-            <groupId>com.dlsc</groupId>
+            <groupId>com.dlsc.jpackagefx</groupId>
             <artifactId>module2</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
