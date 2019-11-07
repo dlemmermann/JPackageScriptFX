@@ -1,12 +1,12 @@
 # JPackageScriptFX #
 
 This project demonstrates how projects can use scripts to build executables of their JavaFX applications via the
-`jdeps`, `jlink`, and `jpackage` tools. Two scripts are included for running builds on Mac and Windows. The jpackage
+`jdeps`, `jlink`, and `jpackage` tools. Two scripts are included for running builds on Mac and Windows. The `jpackage`
 tool is currently only available as an early access release based on the upcoming Java 14 (March 2020).
 
-Important: the scripts do not try to create a fully modularized solution but instead tries to enable existing
+Important: the scripts do not try to create a fully modularized solution but instead try to enable existing
 projects / applications, which often use non-modularized 3rd party dependencies, to be packaged again after the
-previous packaging tool stopped working for Java 11.
+previous packaging tool stopped working since Java 11.
 
 ### Prerequisites
 
