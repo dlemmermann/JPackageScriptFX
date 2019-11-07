@@ -4,18 +4,9 @@ This project demonstrates how projects can use a script to build executables of 
 jdeps, jlink, and jpackage tools. Two scripts are included for running builds on Mac and Windows. The jpackage
 tool is currently only available as an early access release based on the upcoming Java 14 (March 2020).
 
-<div class="panel panel-danger">
-Disclaimer
-{: .panel-heading}
-<div class="panel-body">
-
-Important: the script does not try to create a fully modularized solution but instead tries to enable existing
+**_Important: the script does not try to create a fully modularized solution but instead tries to enable existing
 projects / applications, which often use non-modularized 3rd party dependencies, to be packaged again after the
-previous packaging tool stopped working for Java 11.
-
-</div>
-</div>
-
+previous packaging tool stopped working for Java 11._**
 
 ### Prerequisites
 
