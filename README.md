@@ -63,7 +63,7 @@ The directory structure required by the build:
 The scripts use the `jdeps` tool to analyze the dependencies of the application to determine which modules need to
 be included in the final package. These modules are stored in the list `detected_modules`. 
 
-```
+```bash
 detected_modules=$JAVA_HOME/bin/jdeps \
   --multi-release ${JAVA_VERSION} \
   --ignore-missing-deps \
@@ -75,7 +75,7 @@ detected_modules=$JAVA_HOME/bin/jdeps \
 However, the tool can not always find all modules and sometimes manual intervention is required. For this you can add modules 
 to the list called `manual_modules`.
 
-```
+```bash
 manual_modules=jdk.crypto.ec
 ```
 
@@ -86,7 +86,7 @@ inside the folder target/java-runtime. We could have relied on `jpackage` to per
 it does not behave very well with automatic modules, yet. So in order to have full control over the image generation we
 are letting the script do it via `jlink`.
 
-```
+```bash
 $JAVA_HOME/bin/jlink \
   --no-header-files \
   --no-man-pages  \
@@ -104,7 +104,7 @@ run separately on all platforms that you want to support. When the build is done
 the directory `target/installer`. On Mac you will find a DMG, a PKG, and an APP. On Windows you will find an application
 directory, an EXE, and an MSI.
 
-```
+```bash
 for type in "app-image" "dmg" "pkg"
 do
   $JPACKAGE_HOME/bin/jpackage \
