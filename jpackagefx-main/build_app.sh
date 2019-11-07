@@ -90,7 +90,7 @@ do
   --main-jar ${MAIN_JAR} \
   --java-options -Xmx2048m \
   --runtime-image target/java-runtime \
-  --icon src/main/logo/macosx/icons.icns \
+  --icon src/main/logo/macosx/duke.icns \
   --app-version ${APP_VERSION} \
   --vendor "DLSC GmbH" \
   --copyright "Copyright © 2019 DLSC GmbH" \
