@@ -4,6 +4,19 @@ This project demonstrates how projects can use a script to build executables of 
 jdeps, jlink, and jpackage tools. Two scripts are included for running builds on Mac and Windows. The jpackage
 tool is currently only available as an early access release based on the upcoming Java 14 (March 2020).
 
+<div class="panel panel-danger">
+Disclaimer
+{: .panel-heading}
+<div class="panel-body">
+
+Important: the script does not try to create a fully modularized solution but instead tries to enable existing
+projects / applications, which often use non-modularized 3rd party dependencies, to be packaged again after the
+previous packaging tool stopped working for Java 11.
+
+</div>
+</div>
+
+
 ### Prerequisites
 
 * Java 13 Installation ([download from AdoptOpenJDK](https://adoptopenjdk.net)) 
@@ -61,17 +74,21 @@ The directory structure required by the build:
 The scripts use the **jdeps** tool to analyze the dependencies of the application to determine which modules need to
 be included in the final package. These modules are stored in the list "detected_modules". 
 
-`detected_modules=$JAVA_HOME/bin/jdeps \
+```
+detected_modules=$JAVA_HOME/bin/jdeps \
   --multi-release ${JAVA_VERSION} \
   --ignore-missing-deps \
   --print-module-deps \
   --class-path "target/installer/input/libs/*" \
-    target/classes/com/dlsc/jpackagefx/App.class`
+    target/classes/com/dlsc/jpackagefx/App.class
+```
     
 However, the tool can not always find all modules and sometimes manual intervention is required. For this you can add modules 
 to the list called "manual_modules".
 
-`manual_modules=jdk.crypto.ec`
+```
+manual_modules=jdk.crypto.ec
+```
 
 #### Runtime Image Generation
 
@@ -80,13 +97,15 @@ inside the folder target/java-runtime. We could have relied on **jpackage** to p
 it does not behave very well with automatic modules, yet. So in order to have full control over the image generation we
 are letting the script do it via **jlink**.
 
-`$JAVA_HOME/bin/jlink \
+```
+$JAVA_HOME/bin/jlink \
   --no-header-files \
   --no-man-pages  \
   --compress=2  \
   --strip-debug \
   --add-modules "${detected_modules},${manual_modules}" \
-  --output target/java-runtime`
+  --output target/java-runtime
+```
     
 #### Packaging
 
@@ -96,7 +115,8 @@ run separately on all platforms that you want to support. When the build is done
 the directory target/installer. On Mac you will find a DMG, a PKG, and an APP. On Windows you will find an application
 directory, an EXE, and an MSI.
 
-`for type in "app-image" "dmg" "pkg"
+```
+for type in "app-image" "dmg" "pkg"
 do
   $JPACKAGE_HOME/bin/jpackage \
   --package-type $type \
@@ -113,5 +133,7 @@ do
   --copyright "Copyright © 2019 ACME Inc." \
   --mac-package-identifier uk.co.senapt.desktop \
   --mac-package-name Senapt
-done`
+done
+```
+
 
