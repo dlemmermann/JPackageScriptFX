@@ -92,8 +92,8 @@ do
   --runtime-image target/java-runtime \
   --icon src/main/logo/macosx/duke.icns \
   --app-version ${APP_VERSION} \
-  --vendor "DLSC GmbH" \
-  --copyright "Copyright © 2019 DLSC GmbH" \
+  --vendor "ACME Inc." \
+  --copyright "Copyright © 2019 ACME Inc." \
   --mac-package-identifier uk.co.senapt.desktop \
   --mac-package-name Senapt
 done
