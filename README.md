@@ -59,9 +59,19 @@ The directory structure required by the build:
 #### Dependency Analysis
 
 The scripts use the **jdeps** tool to analyze the dependencies of the application to determine which modules need to
-be included in the final package. These modules are stored in the list "detected_modules". However, the tool can not 
-always find all modules and sometimes manual intervention is required. For this you can add modules to the list called
-"manual_modules".
+be included in the final package. These modules are stored in the list "detected_modules". 
+
+`detected_modules=$JAVA_HOME/bin/jdeps \
+  --multi-release ${JAVA_VERSION} \
+  --ignore-missing-deps \
+  --print-module-deps \
+  --class-path "target/installer/input/libs/*" \
+    target/classes/com/dlsc/jpackagefx/App.class`
+    
+However, the tool can not always find all modules and sometimes manual intervention is required. For this you can add modules 
+to the list called "manual_modules".
+
+`manual_modules=jdk.crypto.ec`
 
 #### Runtime Image Generation
 
@@ -70,6 +80,14 @@ inside the folder target/java-runtime. We could have relied on **jpackage** to p
 it does not behave very well with automatic modules, yet. So in order to have full control over the image generation we
 are letting the script do it via **jlink**.
 
+`$JAVA_HOME/bin/jlink \
+  --no-header-files \
+  --no-man-pages  \
+  --compress=2  \
+  --strip-debug \
+  --add-modules "${detected_modules},${manual_modules}" \
+  --output target/java-runtime`
+    
 #### Packaging
 
 Finally we are invoking the **jpackage** tool in a loop so that it generates all available executables for the platform
@@ -77,4 +95,23 @@ that the build is running on. Please be aware that **jpackage** can not build cr
 run separately on all platforms that you want to support. When the build is done you will find the installers inside
 the directory target/installer. On Mac you will find a DMG, a PKG, and an APP. On Windows you will find an application
 directory, an EXE, and an MSI.
+
+`for type in "app-image" "dmg" "pkg"
+do
+  $JPACKAGE_HOME/bin/jpackage \
+  --package-type $type \
+  --dest target/installer \
+  --input target/installer/input/libs \
+  --name JPackageScriptFX \
+  --main-class com.dlsc.jpackagefx.AppLauncher \
+  --main-jar ${MAIN_JAR} \
+  --java-options -Xmx2048m \
+  --runtime-image target/java-runtime \
+  --icon src/main/logo/macosx/duke.icns \
+  --app-version ${APP_VERSION} \
+  --vendor "ACME Inc." \
+  --copyright "Copyright © 2019 ACME Inc." \
+  --mac-package-identifier uk.co.senapt.desktop \
+  --mac-package-name Senapt
+done`
 
