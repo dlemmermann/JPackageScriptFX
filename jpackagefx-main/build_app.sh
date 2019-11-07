@@ -94,6 +94,6 @@ do
   --app-version ${APP_VERSION} \
   --vendor "ACME Inc." \
   --copyright "Copyright © 2019 ACME Inc." \
-  --mac-package-identifier uk.co.senapt.desktop \
-  --mac-package-name Senapt
+  --mac-package-identifier com.acme.app \
+  --mac-package-name ACME
 done
