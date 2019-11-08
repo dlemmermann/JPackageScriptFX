@@ -10,10 +10,6 @@
 # APP_VERSION: the application version, e.g. 1.0.0, shown in "about" dialog
 
 JAVA_VERSION=13
-JAVA_HOME=$JAVA_HOME
-JPACKAGE_HOME=$JPACKAGE_HOME
-PROJECT_VERSION=$PROJECT_VERSION
-APP_VERSION=$APP_VERSION
 MAIN_JAR="main-ui-$PROJECT_VERSION.jar"
 
 echo "java home: $JAVA_HOME"
