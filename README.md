@@ -1,8 +1,9 @@
 # JPackageScriptFX #
 
-This project demonstrates how projects can use scripts to build executables of their JavaFX applications via the
-`jdeps`, `jlink`, and `jpackage` tools. Two scripts are included for running builds on Mac and Windows. The `jpackage`
-tool is currently only available as an early access release based on the upcoming Java 14 (March 2020).
+This project demonstrates how projects can use "scripts to build self-contained, platform-specific executables and 
+installers of their JavaFX applications via the `jdeps`, `jlink`, and `jpackage` tools. Two scripts are included for 
+running builds on Mac and Windows. The `jpackage` tool is currently only available as an early access release based on
+the upcoming Java 14 (March 2020).
 
 Important: the scripts do not try to create a fully modularized solution but instead try to enable existing
 projects / applications, which often use non-modularized 3rd party dependencies, to be packaged again after the
@@ -10,20 +11,43 @@ previous packaging tool stopped working since Java 11.
 
 ### Prerequisites
 
-* Java 13 Installation ([download from AdoptOpenJDK](https://adoptopenjdk.net)) 
+* Any OpenJDK 13 Installation ([download from AdoptOpenJDK](https://adoptopenjdk.net)) 
 * JPackage 14 EA Installation ([download from java.net](https://jdk.java.net/jpackage/))
+* On Windows you need to have the WIX toolset installed (https://wixtoolset.org)
 
 ### Environment
 
 Both platform-specific build scripts need to know where they can find the java installation and where they can
 find the jpackage installation. Currently these will be in two different places as projects will normally use a production
-release of Java and the early access release of `jpackage`. Once Java 14 is available the `jpackage` tool will be part it.
+release of Java and the early access release of `jpackage`. Once Java 14 is available the `jpackage` tool will be part of
+it.
 
 For the time being you have to set the environment variables `JAVA_HOME` and `JPACKAGE_HOME`. How you set them depends
 on your operating system. On Mac we can set them inside the .bash_profiles file in our user home directory. On Windows
 you would set them in the "environment variables" dialog. In your IDE you can normally also set them as part of a
 Maven run configuration. If you are the only one working on the project then you can even add them to the pom.xml file of
 the main module. 
+
+### Project Structure
+
+The project in this repository uses a multi-module Maven setup with a parent module containing three children modules.
+One of these children modules is the "main" module as it contains the main class. This module also contains the build
+scripts and its target directory will contain the results of the build. The JavaFX application consists of a single
+window displaying two labels. One label gets imported from module 1, the other one from module 2.
+
+### Launcher Class
+
+Upon closer inspection you will notice that the scripts are not creating packages and executables for `App` (which 
+extends the standard JavaFX `Application` class) but for `AppLauncher`. When an `Application` class gets launched then 
+JavaFX will check whether the JavaFX modules are present on the module path. But since we are placing them on the 
+classpath the application can not launch. As a work-around we are starting a standard Java class with a main method in 
+it. This prevents the module path check and the application will launch just fine.
+
+### Icons
+
+Executables require an application icon. Default icons are part of the project. Feel free to use it for your 
+development efforts but make sure to replace it with your own before shipping your product. The platform-specific
+icons can be found inside `jpackagefx-main/src/main/logo`.
 
 ### Building the Project
 
@@ -98,11 +122,11 @@ $JAVA_HOME/bin/jlink
     
 ### Packaging
 
-Finally we are invoking the `jpackage` tool in a loop so that it generates all available executables for the platform
+Finally we are invoking the `jpackage` tool in a loop so that it generates all available package types for the platform
 that the build is running on. Please be aware that `jpackage` can not build cross-platform installers. The build has to
 run separately on all platforms that you want to support. When the build is done you will find the installers inside
 the directory `target/installer`. On Mac you will find a DMG, a PKG, and an APP. On Windows you will find an application
-directory, an EXE, and an MSI.
+directory, an EXE, and an MSI. Please be aware that the EXE is not the application itself but an installer.
 
 ```bash
 for type in "app-image" "dmg" "pkg"
