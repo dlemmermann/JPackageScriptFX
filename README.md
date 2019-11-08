@@ -97,9 +97,10 @@ detected_modules=$JAVA_HOME/bin/jdeps
   --class-path "target/installer/input/libs/*"
     target/classes/com/dlsc/jpackagefx/App.class
 ```
-    
-However, the tool can not always find all modules and sometimes manual intervention is required. For this you can add modules 
-to the list called `manual_modules`.
+
+However, the tool can not always find all modules via this static analysis. E.g., when they are only 
+needed to provide a specific service implementation, some manual intervention is required. For this you can add modules 
+to the comma-separated list called `manual_modules`.
 
 ```bash
 manual_modules=jdk.crypto.ec
@@ -121,6 +122,20 @@ $JAVA_HOME/bin/jlink
   --add-modules "${detected_modules},${manual_modules}"
   --output target/java-runtime
 ```
+    
+In our example code whe have added the module `jdk.crypto.ec`, which would be needed to make https-requests.
+But this is just an example here because the code does not actually make use of it.
+
+If you want to stay on the safe side or if you experience strange errors, which might be due to some missing
+service providers, you can add the option `--bind-services` to the `jlink` command.
+This will, however, make the resulting image much bigger because it will include all service implementations
+and not just the ones that you actually need.
+
+The `jlink` command has an option `--suggest-providers` which, without any further parameters, just outputs a list
+of all service providers on the module path (by default the whole JDK), but that list is far too long and unspecific to be really useful.
+In a variant of this option you can explicitly specify a service interface and you will get a list of all implementors
+of this interface but that implies that you have to know all relevant service interfaces which are possibly used deep down
+in your dependencies or the JDK. So, at the moment this remains a try-and-error game.
     
 ### Packaging
 
