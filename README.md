@@ -35,7 +35,7 @@ One of these children modules is the "main" module as it contains the main class
 scripts and its target directory will contain the results of the build. The JavaFX application consists of a single
 window displaying two labels. One label gets imported from module 1, the other one from module 2.
 
-![alt text](app.png | width=250 "Demo App")
+![alt text](app.png?s=250 "Demo App")
 
 ### Launcher Class
 
