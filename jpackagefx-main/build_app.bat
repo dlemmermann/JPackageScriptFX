@@ -10,10 +10,6 @@ rem PROJECT_VERSION: version used in pom.xml, e.g. 1.0-SNAPSHOT
 rem APP_VERSION: the application version, e.g. 1.0.0, shown in "about" dialog
 
 set JAVA_VERSION=13
-set JAVA_HOME=%JAVA_HOME%
-set JPACKAGE_HOME=%JPACKAGE_HOME%
-set PROJECT_VERSION=%PROJECT_VERSION%
-set APP_VERSION=%APP_VERSION%
 set MAIN_JAR=main-ui-%PROJECT_VERSION%.jar
 
 rem ------ SETUP DIRECTORIES AND FILES ----------------------------------------
