@@ -2,3 +2,9 @@
 *.iml
 src/main/java/
 src/test/
+
+# Eclipse artifacts
+.project
+.settings/
+.classpath
+bin/
