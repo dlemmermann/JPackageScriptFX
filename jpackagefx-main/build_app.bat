@@ -70,7 +70,7 @@ rem A loop iterates over the various packaging types supported by jpackage. In
 rem the end we will find all packages inside the target/installer directory.
 
 for %%s in ("app-image" "msi" "exe") do call "%JPACKAGE_HOME%\bin\jpackage" ^
-  --package-type %%s ^
+  --type %%s ^
   --dest target/installer ^
   --input target/installer/input/libs ^
   --name JPackageScriptFX ^

@@ -78,7 +78,7 @@ do
   echo "Creating installer of type ... $type"
 
   $JPACKAGE_HOME/bin/jpackage \
-  --package-type $type \
+  --type $type \
   --dest target/installer \
   --input target/installer/input/libs \
   --name JPackageScriptFX \
