@@ -103,7 +103,7 @@ needed to provide a specific service implementation, some manual intervention is
 to the comma-separated list called `manual_modules`.
 
 If your application is localized you should also always add `jdk.localedata` to this list.
-This can be reduced to the actually needed locales via a jlink paramter later, e.g., --include-locales=en,de.
+This can be reduced to the actually needed locales via a jlink paramter later, e.g., `--include-locales=en,de`.
 
 ```bash
 manual_modules=jdk.crypto.ec,jdk.localedata
