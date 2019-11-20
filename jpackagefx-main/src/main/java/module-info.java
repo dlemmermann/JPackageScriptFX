@@ -1,5 +1,5 @@
 module jpackagefx.main {
-    requires javafx.graphics;
+    requires transitive javafx.controls;
     requires com.dlsc.jpackage.module1;
     requires com.dlsc.jpackage.module2;
 

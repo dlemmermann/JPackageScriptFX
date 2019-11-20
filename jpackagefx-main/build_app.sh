@@ -50,8 +50,12 @@ echo "detected modules: ${detected_modules}"
 # otherwise HTTPS does not work.
 #
 # See: https://bugs.openjdk.java.net/browse/JDK-8221674
+#
+# In addition we need jdk.localedata if the application is localized.
+# This can be reduced to the actually needed locales via a jlink paramter,
+# e.g., --include-locales=en,de.
 
-manual_modules=jdk.crypto.ec
+manual_modules=jdk.crypto.ec,jdk.localedata
 echo "manual modules: ${manual_modules}"
 
 # ------ RUNTIME IMAGE ------------------------------------------------------
@@ -67,6 +71,7 @@ $JAVA_HOME/bin/jlink \
   --compress=2  \
   --strip-debug \
   --add-modules "${detected_modules},${manual_modules}" \
+  --include-locales=en,de \
   --output target/java-runtime
 
 # ------ PACKAGING ----------------------------------------------------------

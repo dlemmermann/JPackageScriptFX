@@ -102,8 +102,11 @@ However, the tool can not always find all modules via this static analysis. E.g.
 needed to provide a specific service implementation, some manual intervention is required. For this you can add modules 
 to the comma-separated list called `manual_modules`.
 
+If your application is localized you should also always add `jdk.localedata` to this list.
+This can be reduced to the actually needed locales via a jlink paramter later, e.g., --include-locales=en,de.
+
 ```bash
-manual_modules=jdk.crypto.ec
+manual_modules=jdk.crypto.ec,jdk.localedata
 ```
 
 ### Runtime Image Generation
@@ -120,6 +123,7 @@ $JAVA_HOME/bin/jlink
   --compress=2 
   --strip-debug
   --add-modules "${detected_modules},${manual_modules}"
+  --include-locales=en,de
   --output target/java-runtime
 ```
     

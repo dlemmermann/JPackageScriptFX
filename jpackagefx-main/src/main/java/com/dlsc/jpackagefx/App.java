@@ -5,12 +5,16 @@
  */
 package com.dlsc.jpackagefx;
 
+import java.util.Locale;
+
 import com.dlsc.jpackage.module1.ModuleLabel1;
 import com.dlsc.jpackage.module2.ModuleLabel2;
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -18,9 +22,10 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        Label defaultLocaleLabel = new Label(Locale.getDefault().getDisplayLanguage());
         ModuleLabel1 label1 = new ModuleLabel1();
         ModuleLabel2 label2 = new ModuleLabel2();
-        VBox box = new VBox(20, label1, label2);
+        VBox box = new VBox(20, defaultLocaleLabel, label1, label2);
         box.setAlignment(Pos.CENTER);
         box.setPadding(new Insets(20));
         Scene scene = new Scene(box);
