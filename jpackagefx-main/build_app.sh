@@ -22,8 +22,8 @@ echo "main JAR file: $MAIN_JAR"
 # Remove previously generated java runtime and installers. Copy all required
 # jar files into the input/libs folder.
 
-rm -rf ./target/java-runtime/
-rm -rf target/installer/
+rm -rfd ./target/java-runtime/
+rm -rfd target/installer/
 
 mkdir -p target/installer/input/libs/
 
