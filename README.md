@@ -143,6 +143,8 @@ in your dependencies or the JDK. So, at the moment this remains a try-and-error 
     
 ### Packaging
 
+#### Basics
+
 Finally we are invoking the `jpackage` tool in a loop so that it generates all available package types for the platform
 that the build is running on. Please be aware that `jpackage` can not build cross-platform installers. The build has to
 run separately on all platforms that you want to support. When the build is done you will find the installers inside
@@ -170,4 +172,21 @@ do
 done
 ```
 
+#### Customization
 
+Once you have come this far, you can now consider to customize your packaging.
+Under the hood the `jpackage` tool uses platform-specific tooling to create the various package types.
+The customization of the packaging is therefore also very platform-specific and has to be individually
+for each supported platform and package type. However, there are two common features of `jpackage` that you can use to make this task easier.
+
+The first one is the option `--temp some_temp_dir` which asks `jpackage` to copy all scripts and resources needed to create the selected package type into a directory `some_temp_dir`. These are the scripts and resources that `jpackage` would use by default.
+
+The second one is the option `--resource-dir some_resource_dir` which asks `jpackage` to first look
+for resources in the directory `some_resource_dir` and then use its defaults only for the ones it does not find there.
+
+With these two options you can first generate a set of default resources from which you can pick the ones you want to modify and copy them over to the directory `some_resource_dir`. In a second run of
+`jpackage` you can then apply these changes. The most likely changes you can make this way is to exchange
+the default icons, used by the various package types, with your own ones.
+
+We do not yet provide an example for these customizations because this is still work in progress and there are
+still some problems. For example it is currently not possible to build installers which support HiDPI displays.
