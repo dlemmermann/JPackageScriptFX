@@ -189,4 +189,4 @@ With these two options you can first generate a set of default resources from wh
 the default icons, used by the various package types, with your own ones.
 
 We do not yet provide an example for these customizations because this is still work in progress and there are
-still some problems. For example it is currently not possible to build installers which support HiDPI displays.
+still some problems.
