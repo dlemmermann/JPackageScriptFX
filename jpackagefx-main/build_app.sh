@@ -9,7 +9,7 @@
 # PROJECT_VERSION: version used in pom.xml, e.g. 1.0-SNAPSHOT
 # APP_VERSION: the application version, e.g. 1.0.0, shown in "about" dialog
 
-JAVA_VERSION=13
+JAVA_VERSION=14
 MAIN_JAR="main-ui-$PROJECT_VERSION.jar"
 
 echo "java home: $JAVA_HOME"
