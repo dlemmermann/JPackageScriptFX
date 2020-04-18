@@ -2,8 +2,7 @@
 
 This project demonstrates how projects can use scripts to build self-contained, platform-specific executables and 
 installers of their JavaFX applications via the `jdeps`, `jlink`, and `jpackage` tools. Two scripts are included for 
-running builds on Mac and Windows. The `jpackage` tool is currently only available as an early access release based on
-the upcoming Java 14 (March 2020).
+running builds on Mac and Windows. The `jpackage` tool is bundled with the JDK since version 14.
 
 Important: the scripts do not try to create a fully modularized solution but instead try to enable existing
 projects / applications, which often use non-modularized 3rd party dependencies, to be packaged again after the
@@ -11,29 +10,25 @@ previous packaging tool stopped working since Java 11.
 
 ### Prerequisites
 
-* Any OpenJDK 13 Installation ([download from AdoptOpenJDK](https://adoptopenjdk.net)) 
-* JPackage 14 EA Installation ([download from java.net](https://jdk.java.net/jpackage/))
+* Any OpenJDK 14 Installation ([download from AdoptOpenJDK](https://adoptopenjdk.net)) 
 * On Windows you need to have the WIX toolset installed (https://wixtoolset.org)
 
 ### Environment
 
-Both platform-specific build scripts need to know where they can find the java installation and where they can
-find the jpackage installation. Currently these will be in two different places as projects will normally use a production
-release of Java and the early access release of `jpackage`. Once Java 14 is available the `jpackage` tool will be part of
-it.
-
-For the time being you have to set the environment variables `JAVA_HOME` and `JPACKAGE_HOME`. How you set them depends
-on your operating system. On Mac we can set them inside the .bash_profiles file in our user home directory. On Windows
-you would set them in the "environment variables" dialog. In your IDE you can normally also set them as part of a
-Maven run configuration. If you are the only one working on the project then you can even add them to the pom.xml file of
+Both platform-specific build scripts need to know where they can find the java installation with the jpackage tool.
+Therefore you have to set the environment variable `JAVA_HOME`. How you set it depends
+on your operating system. On Mac you can set it inside the .bash_profiles file in your user home directory. On Windows
+you would set it in the "environment variables" dialog. In your IDE you can normally also set it as part of a
+Maven run configuration. If you are the only one working on the project then you can even add it to the pom.xml file of
 the main module. 
 
 ### Project Structure
 
-The project in this repository uses a multi-module Maven setup with a parent module containing three children modules.
-One of these children modules is the "main" module as it contains the main class. This module also contains the build
+The project in this repository uses a multi-module Maven setup with a parent module containing three child modules.
+One of these child modules is the "main" module as it contains the main class. This module also contains the build
 scripts and its target directory will contain the results of the build. The JavaFX application consists of a single
-window displaying two labels. One label gets imported from module 1, the other one from module 2.
+window displaying three labels. The first one shows the currently configured locale and the other two labels get
+imported from module 1 and module 2 respectively.
 
 ![alt text](app.png "Demo App")
 
@@ -43,7 +38,8 @@ Upon closer inspection you will notice that the scripts are not creating package
 extends the standard JavaFX `Application` class) but for `AppLauncher`. When an `Application` class gets launched then 
 JavaFX will check whether the JavaFX modules are present on the module path. But since we are placing them on the 
 classpath the application can not launch. As a work-around we are starting a standard Java class with a main method in 
-it. This prevents the module path check and the application will launch just fine.
+it. This prevents the module path check and the application will launch just fine without us having to provide any of
+the module system specific options.
 
 ### Icons
 
@@ -71,7 +67,6 @@ The required environment for the scripts consists of environment variables and a
 variables are used:
 
 * JAVA_HOME - the location of the JDK matching the Java version
-* JPACKAGE_HOME - the location of the jpackage early access distribution
 * JAVA_VERSION - defines the runtime environment that the final application is targeting
 * PROJECT_VERSION - the version of the project as defined in the pom.xml file (e.g. 1.0-SNAPSHOT)
 * APP_VERSION - the version for the executable (careful: do not re-use project version. The supported Windows version 
@@ -166,7 +161,7 @@ do
   --icon src/main/logo/macosx/duke.icns
   --app-version ${APP_VERSION}
   --vendor "ACME Inc."
-  --copyright "Copyright © 2019 ACME Inc."
+  --copyright "Copyright © 2019-20 ACME Inc."
   --mac-package-identifier com.acme.app
   --mac-package-name ACME
 done

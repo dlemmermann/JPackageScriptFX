@@ -69,7 +69,7 @@ rem ------ PACKAGING ----------------------------------------------------------
 rem A loop iterates over the various packaging types supported by jpackage. In
 rem the end we will find all packages inside the target/installer directory.
 
-for %%s in ("app-image" "msi" "exe") do call "%JPACKAGE_HOME%\bin\jpackage" ^
+for %%s in ("app-image" "msi" "exe") do call "%JAVA_HOME%\bin\jpackage" ^
   --type %%s ^
   --dest target/installer ^
   --input target/installer/input/libs ^
@@ -81,4 +81,4 @@ for %%s in ("app-image" "msi" "exe") do call "%JPACKAGE_HOME%\bin\jpackage" ^
   --icon src/main/logo/windows/duke.ico ^
   --app-version %APP_VERSION% ^
   --vendor "ACME Inc." ^
-  --copyright "Copyright © 2019 ACME Inc."
+  --copyright "Copyright © 2019-20 ACME Inc."
