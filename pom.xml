@@ -12,6 +12,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>14</java.version>
         <javafx.version>14.0.1</javafx.version>
+        <jmetro.version>11.6.9</jmetro.version>
         <maven.compiler.source>14</maven.compiler.source>
         <maven.compiler.target>14</maven.compiler.target>
     </properties>
@@ -28,6 +29,11 @@
             <artifactId>javafx-controls</artifactId>
             <version>${javafx.version}</version>
         </dependency>
+		<dependency>
+		    <groupId>org.jfxtras</groupId>
+		    <artifactId>jmetro</artifactId>
+		    <version>${jmetro.version}</version>
+		</dependency>
     </dependencies>
 
     <build>
