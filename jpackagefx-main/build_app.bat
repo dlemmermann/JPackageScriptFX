@@ -81,4 +81,7 @@ for %%s in ("app-image" "msi" "exe") do call "%JAVA_HOME%\bin\jpackage" ^
   --icon src/main/logo/windows/duke.ico ^
   --app-version %APP_VERSION% ^
   --vendor "ACME Inc." ^
-  --copyright "Copyright © 2019-20 ACME Inc."
+  --copyright "Copyright © 2019-20 ACME Inc." ^
+  --win-dir-chooser ^
+  --win-shortcut
+  
