@@ -12,6 +12,9 @@ rem APP_VERSION: the application version, e.g. 1.0.0, shown in "about" dialog
 set JAVA_VERSION=13
 set MAIN_JAR=main-ui-%PROJECT_VERSION%.jar
 
+rem Set desired installer type: "app-image" "msi" "exe".
+INSTALLER_TYPE=msi
+
 rem ------ SETUP DIRECTORIES AND FILES ----------------------------------------
 rem Remove previously generated java runtime and installers. Copy all required
 rem jar files into the input/libs folder.
@@ -66,11 +69,10 @@ call "%JAVA_HOME%\bin\jlink" ^
 
 
 rem ------ PACKAGING ----------------------------------------------------------
-rem A loop iterates over the various packaging types supported by jpackage. In
-rem the end we will find all packages inside the target/installer directory.
+rem In the end we will find the package inside the target/installer directory.
 
-for %%s in ("app-image" "msi" "exe") do call "%JAVA_HOME%\bin\jpackage" ^
-  --type %%s ^
+call "%JAVA_HOME%\bin\jpackage" ^
+  --type %INSTALLER_TYPE% ^
   --dest target/installer ^
   --input target/installer/input/libs ^
   --name JPackageScriptFX ^
@@ -83,5 +85,6 @@ for %%s in ("app-image" "msi" "exe") do call "%JAVA_HOME%\bin\jpackage" ^
   --vendor "ACME Inc." ^
   --copyright "Copyright © 2019-20 ACME Inc." ^
   --win-dir-chooser ^
-  --win-shortcut
-  
+  --win-shortcut ^
+  --win-per-user-install ^
+  --win-menu

@@ -12,6 +12,9 @@
 JAVA_VERSION=14
 MAIN_JAR="main-ui-$PROJECT_VERSION.jar"
 
+# Set desired installer type: "app-image", "dmg" or "pkg".
+INSTALLER_TYPE=dmg
+
 echo "java home: $JAVA_HOME"
 echo "project version: $PROJECT_VERSION"
 echo "app version: $APP_VERSION"
@@ -74,26 +77,22 @@ $JAVA_HOME/bin/jlink \
   --output target/java-runtime
 
 # ------ PACKAGING ----------------------------------------------------------
-# A loop iterates over the various packaging types supported by jpackage. In
-# the end we will find all packages inside the target/installer directory.
+# In the end we will find the package inside the target/installer directory.
 
-for type in "app-image" "dmg" "pkg"
-do
-  echo "Creating installer of type ... $type"
+echo "Creating installer of type $INSTALLER_TYPE"
 
-  $JAVA_HOME/bin/jpackage \
-  --type $type \
-  --dest target/installer \
-  --input target/installer/input/libs \
-  --name JPackageScriptFX \
-  --main-class com.dlsc.jpackagefx.AppLauncher \
-  --main-jar ${MAIN_JAR} \
-  --java-options -Xmx2048m \
-  --runtime-image target/java-runtime \
-  --icon src/main/logo/macosx/duke.icns \
-  --app-version ${APP_VERSION} \
-  --vendor "ACME Inc." \
-  --copyright "Copyright © 2019 ACME Inc." \
-  --mac-package-identifier com.acme.app \
-  --mac-package-name ACME
-done
+$JAVA_HOME/bin/jpackage \
+--type $INSTALLER_TYPE \
+--dest target/installer \
+--input target/installer/input/libs \
+--name JPackageScriptFX \
+--main-class com.dlsc.jpackagefx.AppLauncher \
+--main-jar ${MAIN_JAR} \
+--java-options -Xmx2048m \
+--runtime-image target/java-runtime \
+--icon src/main/logo/macosx/duke.icns \
+--app-version ${APP_VERSION} \
+--vendor "ACME Inc." \
+--copyright "Copyright © 2019-20 ACME Inc." \
+--mac-package-identifier com.acme.app \
+--mac-package-name ACME
