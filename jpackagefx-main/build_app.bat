@@ -13,7 +13,7 @@ set JAVA_VERSION=13
 set MAIN_JAR=main-ui-%PROJECT_VERSION%.jar
 
 rem Set desired installer type: "app-image" "msi" "exe".
-INSTALLER_TYPE=msi
+set INSTALLER_TYPE=msi
 
 rem ------ SETUP DIRECTORIES AND FILES ----------------------------------------
 rem Remove previously generated java runtime and installers. Copy all required
