@@ -39,7 +39,7 @@ cp target/${MAIN_JAR} target/installer/input/libs/
 
 echo "detecting required modules"
 detected_modules=`$JAVA_HOME/bin/jdeps \
-  -q \ 
+  -q \
   --multi-release ${JAVA_VERSION} \
   --ignore-missing-deps \
   --print-module-deps \
