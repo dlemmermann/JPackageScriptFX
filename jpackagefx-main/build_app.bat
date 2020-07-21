@@ -33,6 +33,7 @@ rem application.
 echo detecting required modules
 
 "%JAVA_HOME%\bin\jdeps" ^
+  -q ^
   --multi-release %JAVA_VERSION% ^
   --ignore-missing-deps ^
   --class-path "target\installer\input\libs\*" ^
