@@ -2,7 +2,7 @@
 
 This project demonstrates how projects can use scripts to build self-contained, platform-specific executables and 
 installers of their JavaFX applications via the `jdeps`, `jlink`, and `jpackage` tools. Two scripts are included for 
-running builds on Mac and Windows. The `jpackage` tool is bundled with the JDK since version 14.
+running builds on Mac/Linux and Windows. The `jpackage` tool is bundled with the JDK since version 14.
 
 Important: the scripts do not try to create a fully modularized solution but instead try to enable existing
 projects / applications, which often use non-modularized 3rd party dependencies, to be packaged again after the
@@ -17,7 +17,7 @@ previous packaging tool stopped working since Java 11.
 
 Both platform-specific build scripts need to know where they can find the java installation with the jpackage tool.
 Therefore you have to set the environment variable `JAVA_HOME`. How you set it depends
-on your operating system. On Mac you can set it inside the .bash_profiles file in your user home directory. On Windows
+on your operating system. On Mac/Linux you can set it inside the .bash_profiles file in your user home directory. On Windows
 you would set it in the "environment variables" dialog. In your IDE you can normally also set it as part of a
 Maven run configuration. If you are the only one working on the project then you can even add it to the pom.xml file of
 the main module. 
@@ -52,7 +52,7 @@ icons can be found inside `jpackagefx-main/src/main/logo`.
 Once your environment is set up you can simply call the `mvn clean install` on the root / parent module. It will do
 a standard build of the application and in addition it will analyze all the dependencies and copy the resulting set of
 JAR files into the folder target/libs. This work is done via the Maven dependency plugin. Once the standard build is 
-completed Maven will invoke the shell script (on Mac) or the batch script (on Windows). The build script uses two 
+completed Maven will invoke the shell script (on Mac/Linux) or the batch script (on Windows). The Maven  main-ui/pom.xml uses two 
 different profiles, both of them being activated via the OS that they are running on.
 
 The scripts both have the same structure:
@@ -143,8 +143,9 @@ in your dependencies or the JDK. So, at the moment this remains a try-and-error 
 Finally we are invoking the `jpackage` tool in a loop so that it generates all available package types for the platform
 that the build is running on. Please be aware that `jpackage` can not build cross-platform installers. The build has to
 run separately on all platforms that you want to support. When the build is done you will find the installers inside
-the directory `target/installer`. On Mac you will find a DMG, a PKG, and an APP. On Windows you will find an application
-directory, an EXE, and an MSI. Please be aware that the EXE is not the application itself but an installer.
+the directory `target/installer`. On Mac you will find a DMG, PKG, or an APP. On Linux a DEB, RPM or an application directory.
+On Windows you will find an application directory, an EXE, and an MSI. Please be aware that the EXE is not the application
+itself but an installer.
 
 ```bash
 for type in "app-image" "dmg" "pkg"
