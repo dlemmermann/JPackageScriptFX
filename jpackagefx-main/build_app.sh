@@ -12,8 +12,8 @@
 JAVA_VERSION=14
 MAIN_JAR="main-ui-$PROJECT_VERSION.jar"
 
-# Set desired installer type: "app-image", "dmg" or "pkg".
-INSTALLER_TYPE=dmg
+# Set desired installer type: "app-image", "dmg", "pkg", "rpm" or "deb".
+INSTALLER_TYPE=deb
 
 echo "java home: $JAVA_HOME"
 echo "project version: $PROJECT_VERSION"
@@ -82,6 +82,24 @@ $JAVA_HOME/bin/jlink \
 
 echo "Creating installer of type $INSTALLER_TYPE"
 
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+
+$JAVA_HOME/bin/jpackage \
+--type $INSTALLER_TYPE \
+--dest target/installer \
+--input target/installer/input/libs \
+--name JPackageScriptFX \
+--main-class com.dlsc.jpackagefx.AppLauncher \
+--main-jar ${MAIN_JAR} \
+--java-options -Xmx2048m \
+--runtime-image target/java-runtime \
+--icon src/main/logo/linux/duke.png \
+--app-version ${APP_VERSION} \
+--vendor "ACME Inc." \
+--copyright "Copyright © 2019-20 ACME Inc."
+
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+
 $JAVA_HOME/bin/jpackage \
 --type $INSTALLER_TYPE \
 --dest target/installer \
@@ -97,3 +115,8 @@ $JAVA_HOME/bin/jpackage \
 --copyright "Copyright © 2019-20 ACME Inc." \
 --mac-package-identifier com.acme.app \
 --mac-package-name ACME
+
+else
+    echo "Unknown OSTYPE: $OSTYPE"
+    exit 1
+fi
