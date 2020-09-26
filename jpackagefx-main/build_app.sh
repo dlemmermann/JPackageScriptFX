@@ -13,7 +13,7 @@ JAVA_VERSION=14
 MAIN_JAR="main-ui-$PROJECT_VERSION.jar"
 
 # Set desired installer type: "app-image", "dmg", "pkg", "rpm" or "deb".
-INSTALLER_TYPE=deb
+INSTALLER_TYPE=app-image
 
 echo "java home: $JAVA_HOME"
 echo "project version: $PROJECT_VERSION"
@@ -69,6 +69,7 @@ echo "manual modules: ${manual_modules}"
 
 echo "creating java runtime image"
 $JAVA_HOME/bin/jlink \
+  --strip-native-commands \
   --no-header-files \
   --no-man-pages  \
   --compress=2  \
