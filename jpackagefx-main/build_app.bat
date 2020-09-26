@@ -61,6 +61,7 @@ rem works with dependencies that are not fully modularized, yet.
 echo creating java runtime image
 
 call "%JAVA_HOME%\bin\jlink" ^
+  --strip-native-commands ^
   --no-header-files ^
   --no-man-pages ^
   --compress=2 ^
