@@ -10,7 +10,7 @@ previous packaging tool stopped working since Java 11.
 
 ### Prerequisites
 
-* Any OpenJDK 14 Installation ([download from AdoptOpenJDK](https://adoptopenjdk.net)) 
+* Any OpenJDK 17 Installation ([download from AdoptOpenJDK](https://adoptopenjdk.net)) 
 * On Windows you need to have the WIX toolset installed (https://wixtoolset.org)
 
 ### Environment
@@ -101,7 +101,7 @@ If your application is localized you should also always add `jdk.localedata` to 
 This can be reduced to the actually needed locales via a jlink paramter later, e.g., `--include-locales=en,de`.
 
 ```bash
-manual_modules=jdk.crypto.ec,jdk.localedata
+manual_modules=,jdk.crypto.ec,jdk.localedata
 ```
 
 ### Runtime Image Generation
@@ -117,7 +117,7 @@ $JAVA_HOME/bin/jlink
   --no-man-pages 
   --compress=2 
   --strip-debug
-  --add-modules "${detected_modules},${manual_modules}"
+  --add-modules "${detected_modules}${manual_modules}"
   --include-locales=en,de
   --output target/java-runtime
 ```
@@ -162,7 +162,7 @@ do
   --icon src/main/logo/macosx/duke.icns
   --app-version ${APP_VERSION}
   --vendor "ACME Inc."
-  --copyright "Copyright © 2019-20 ACME Inc."
+  --copyright "Copyright © 2019-21 ACME Inc."
   --mac-package-identifier com.acme.app
   --mac-package-name ACME
 done

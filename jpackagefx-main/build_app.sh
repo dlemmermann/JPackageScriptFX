@@ -9,7 +9,7 @@
 # PROJECT_VERSION: version used in pom.xml, e.g. 1.0-SNAPSHOT
 # APP_VERSION: the application version, e.g. 1.0.0, shown in "about" dialog
 
-JAVA_VERSION=14
+JAVA_VERSION=17
 MAIN_JAR="main-ui-$PROJECT_VERSION.jar"
 
 # Set desired installer type: "app-image", "dmg", "pkg", "rpm" or "deb".
@@ -57,13 +57,15 @@ echo "detected modules: ${detected_modules}"
 # In addition we need jdk.localedata if the application is localized.
 # This can be reduced to the actually needed locales via a jlink paramter,
 # e.g., --include-locales=en,de.
+#
+# Don't forget the leading ','!
 
-manual_modules=jdk.crypto.ec,jdk.localedata
+manual_modules=,jdk.crypto.ec,jdk.localedata
 echo "manual modules: ${manual_modules}"
 
 # ------ RUNTIME IMAGE ------------------------------------------------------
 # Use the jlink tool to create a runtime image for our application. We are
-# doing this is a separate step instead of letting jlink do the work as part
+# doing this in a separate step instead of letting jlink do the work as part
 # of the jpackage tool. This approach allows for finer configuration and also
 # works with dependencies that are not fully modularized, yet.
 
@@ -74,7 +76,7 @@ $JAVA_HOME/bin/jlink \
   --no-man-pages  \
   --compress=2  \
   --strip-debug \
-  --add-modules "${detected_modules},${manual_modules}" \
+  --add-modules "${detected_modules}${manual_modules}" \
   --include-locales=en,de \
   --output target/java-runtime
 
@@ -97,7 +99,7 @@ $JAVA_HOME/bin/jpackage \
 --icon src/main/logo/linux/duke.png \
 --app-version ${APP_VERSION} \
 --vendor "ACME Inc." \
---copyright "Copyright © 2019-20 ACME Inc."
+--copyright "Copyright © 2019-21 ACME Inc."
 
 elif [[ "$OSTYPE" == "darwin"* ]]; then
 
@@ -113,7 +115,7 @@ $JAVA_HOME/bin/jpackage \
 --icon src/main/logo/macosx/duke.icns \
 --app-version ${APP_VERSION} \
 --vendor "ACME Inc." \
---copyright "Copyright © 2019-20 ACME Inc." \
+--copyright "Copyright © 2019-21 ACME Inc." \
 --mac-package-identifier com.acme.app \
 --mac-package-name ACME
 

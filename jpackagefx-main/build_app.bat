@@ -9,7 +9,7 @@ rem
 rem PROJECT_VERSION: version used in pom.xml, e.g. 1.0-SNAPSHOT
 rem APP_VERSION: the application version, e.g. 1.0.0, shown in "about" dialog
 
-set JAVA_VERSION=14
+set JAVA_VERSION=17
 set MAIN_JAR=main-ui-%PROJECT_VERSION%.jar
 
 rem Set desired installer type: "app-image" "msi" "exe".
@@ -48,13 +48,19 @@ rem jdk.crypto.ec has to be added manually bound via --bind-services or
 rem otherwise HTTPS does not work.
 rem
 rem See: https://bugs.openjdk.java.net/browse/JDK-8221674
+rem
+rem In addition we need jdk.localedata if the application is localized.
+rem This can be reduced to the actually needed locales via a jlink paramter,
+rem e.g., --include-locales=en,de.
+rem
+rem Don't forget the leading ','!
 
-set manual_modules=jdk.crypto.ec
+set manual_modules=,jdk.crypto.ec,jdk.localedata
 echo manual modules: %manual_modules%
 
 rem ------ RUNTIME IMAGE ------------------------------------------------------
 rem Use the jlink tool to create a runtime image for our application. We are
-rem doing this is a separate step instead of letting jlink do the work as part
+rem doing this in a separate step instead of letting jlink do the work as part
 rem of the jpackage tool. This approach allows for finer configuration and also
 rem works with dependencies that are not fully modularized, yet.
 
@@ -66,7 +72,8 @@ call "%JAVA_HOME%\bin\jlink" ^
   --no-man-pages ^
   --compress=2 ^
   --strip-debug ^
-  --add-modules %detected_modules%,%manual_modules% ^
+  --add-modules %detected_modules% %manual_modules% ^
+  --include-locales=en,de ^
   --output target/java-runtime
 
 
@@ -85,7 +92,7 @@ call "%JAVA_HOME%\bin\jpackage" ^
   --icon src/main/logo/windows/duke.ico ^
   --app-version %APP_VERSION% ^
   --vendor "ACME Inc." ^
-  --copyright "Copyright © 2019-20 ACME Inc." ^
+  --copyright "Copyright © 2019-21 ACME Inc." ^
   --win-dir-chooser ^
   --win-shortcut ^
   --win-per-user-install ^
