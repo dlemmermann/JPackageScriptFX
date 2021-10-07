@@ -55,7 +55,7 @@ echo "detected modules: ${detected_modules}"
 # See: https://bugs.openjdk.java.net/browse/JDK-8221674
 #
 # In addition we need jdk.localedata if the application is localized.
-# This can be reduced to the actually needed locales via a jlink paramter,
+# This can be reduced to the actually needed locales via a jlink parameter,
 # e.g., --include-locales=en,de.
 #
 # Don't forget the leading ','!

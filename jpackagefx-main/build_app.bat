@@ -50,7 +50,7 @@ rem
 rem See: https://bugs.openjdk.java.net/browse/JDK-8221674
 rem
 rem In addition we need jdk.localedata if the application is localized.
-rem This can be reduced to the actually needed locales via a jlink paramter,
+rem This can be reduced to the actually needed locales via a jlink parameter,
 rem e.g., --include-locales=en,de.
 rem
 rem Don't forget the leading ','!
