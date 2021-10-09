@@ -5,7 +5,7 @@ name: Windows Client
 
 on:
   push:
-    branches: [ adopt ]
+    branches: [ master ]
 
 jobs:
   build:
