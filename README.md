@@ -1,5 +1,7 @@
 # JPackageScriptFX #
 
+<a href="https://foojay.io/today/works-with-openjdk"><img align="right" src="https://github.com/foojayio/badges/raw/main/works_with_openjdk/Works-with-OpenJDK.png" width="100"></a>
+
 This project demonstrates how projects can use scripts to build self-contained, platform-specific executables and 
 installers of their JavaFX applications via the `jdeps`, `jlink`, and `jpackage` tools. Two scripts are included for 
 running builds on Mac/Linux and Windows. The `jpackage` tool is bundled with the JDK since version 14.
