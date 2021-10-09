@@ -5,7 +5,7 @@ name: Linux Client
 
 on:
   push:
-    branches: [ master ]
+    branches: [ adopt ]
 
 jobs:
   build:
