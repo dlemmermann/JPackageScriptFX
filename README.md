@@ -188,3 +188,20 @@ the default icons, used by the various package types, with your own ones.
 
 We do not yet provide an example for these customizations because this is still work in progress and there are
 still some problems.
+
+#### Testing
+
+In case building and packaging works but the application does not do what it is supposed to do you can try the following.
+
+You can run the app as a regualar Java application with the collected libs in order to see what is going wrong. Very often
+applications behave differently when packaged compared to running them from an IDE for example. The reason very
+often is a wrong handling of resource loading but there are other reasons too.
+
+From the folder jpackagefx-main call
+
+`$JAVA_HOME/bin/java -cp "target/installer/input/libs/*" com.dlsc.jpackagefx.AppLauncher`
+
+You may have to adapt that to the Windows calling conventions. Ignore the warning
+
+`Unsupported JavaFX configuration: classes were loaded from 'unnamed module @6f1eab88'`
+
